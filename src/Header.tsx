@@ -3,8 +3,7 @@ import { NavLink } from "react-router-dom";
 function Header() {
   return (
     <>
-      <header className="bg-gray-800 p-4 flex justify-between relative z-10">
-        <div className="text-white text-2xl font-bold">Laurence's sandBox</div>
+      <header className="bg-gray-800 p-4 flex">
         <nav>
           <ul className="flex space-x-4">
             <li>
