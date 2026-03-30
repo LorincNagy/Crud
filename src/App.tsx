@@ -1,7 +1,12 @@
-import { Profiles } from "./Profiles";
+import { BrowserRouter } from "react-router-dom";
+import AppRouter from "./router/Approuter";
 
 function App() {
-  return <Profiles />;
+  return (
+    <BrowserRouter>
+      <AppRouter />
+    </BrowserRouter>
+  );
 }
 
 export default App;

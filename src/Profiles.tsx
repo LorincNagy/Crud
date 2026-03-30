@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
-import { supabase } from "./supabaseClient";
+import { supabase } from "./SupabaseClient";
 
 interface Profile {
-  id: string;
   name: string;
-  created_at?: string;
   color: string;
 }
 
@@ -30,8 +28,8 @@ export function Profiles() {
     <div>
       <h2>Available profiles</h2>
       <ul>
-        {profiles.map((profile) => (
-          <li key={profile.id}>
+        {profiles.map((profile, index) => (
+          <li key={index}>
             {profile.name} - {profile.color}
           </li>
         ))}
