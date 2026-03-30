@@ -12,7 +12,7 @@ function App() {
         style={{ backgroundImage: `url(${backgroundImage})` }}
       >
         <Header />
-        <main className="grow">
+        <main className="grow justify-center items-center flex">
           <AppRouter />
         </main>
         <Footer />

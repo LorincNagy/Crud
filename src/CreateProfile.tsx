@@ -10,7 +10,7 @@ function CreateProfile() {
   const [color, setColor] = useState("");
 
   return (
-    <div className="max-w-md mx-auto mt-10 bg-white shadow-xl rounded-2xl overflow-hidden border border-gray-100">
+    <div className=" bg-white shadow-xl rounded-2xl overflow-hidden border border-gray-100">
       <h2 className="text-center bg-gray-50 p-5 text-xl font-bold text-gray-800 border-b">
         Create a new profile
       </h2>
