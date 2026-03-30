@@ -10,15 +10,13 @@ function CreateProfile() {
   const [color, setColor] = useState("");
 
   return (
-    /* KONTÉNER: max-w-md (fix szélesség), mx-auto (középre), shadow (árnyék), rounded (kerekítés) */
     <div className="max-w-md mx-auto mt-10 bg-white shadow-xl rounded-2xl overflow-hidden border border-gray-100">
       <h2 className="text-center bg-gray-50 p-5 text-xl font-bold text-gray-800 border-b">
         Create a new profile
       </h2>
 
-      {/* FORM: p-6 (belső margó), gap-4 (térköz az elemek között) */}
       <form
-        className="p-6 flex flex-col gap-5"
+        className="p-6 flex flex-col gap-4"
         onSubmit={(e) => e.preventDefault()}
       >
         <label className="flex flex-col gap-2">
@@ -46,10 +44,8 @@ function CreateProfile() {
             onChange={(e) => setColor(e.target.value)}
           />
         </label>
-
-        {/* SUBMIT GOMB: w-full (kitölti a konténert), py-3 (vastagabb gomb) */}
         <button
-          className="w-full bg-blue-700 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-xl shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1 active:scale-95"
+          className="w-full bg-black hover:bg-gray-500 text-white font-bold py-3 px-4 rounded-xl shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1 active:scale-95"
           type="submit"
         >
           Create Profile
