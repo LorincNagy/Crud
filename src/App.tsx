@@ -1,5 +1,7 @@
+import { Profiles } from "./Profiles";
+
 function App() {
-  return <>haha</>;
+  return <Profiles />;
 }
 
 export default App;
