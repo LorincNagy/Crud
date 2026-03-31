@@ -47,30 +47,42 @@ function SignIn() {
   };
 
   return (
-    <div className="mx-auto max-w-md p-6 border rounded-2xl mt-10 shadow-lg">
-      <h2 className="text-xl font-bold mb-4 text-center">Bejelentkezés</h2>
+    <div className="mx-auto max-w-md bg-black opacity-80 shadow-xl rounded-2xl overflow-hidden border border-gray-400 mt-10">
+      <h2 className="text-center opacity-70 p-5 text-xl font-bold text-rose-400 border-b">
+        Bejelentkezés
+      </h2>
       <form
+        className="p-6 flex flex-col gap-4"
         onSubmit={(e) => {
           e.preventDefault();
           handleSignIn();
         }}
-        className="flex flex-col gap-4"
       >
-        <input
-          type="email"
-          placeholder="Email"
-          className="border p-2 rounded"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Jelszó"
-          className="border p-2 rounded"
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <label className="flex flex-col gap-2">
+          <span className="text-sm font-semibold text-rose-400 ml-1">
+            Email:
+          </span>
+          <input
+            type="email"
+            placeholder="Email"
+            className="text-rose-400  bg-black px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 outline-none transition-all"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </label>
+        <label className="flex flex-col gap-2">
+          <span className="text-sm font-semibold text-rose-400 ml-1">
+            Jelszó:
+          </span>
+          <input
+            type="password"
+            placeholder="Jelszó"
+            className="text-rose-400  bg-black px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 outline-none transition-all"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </label>
         <button
           type="submit"
-          className="bg-green-600 text-white p-2 rounded hover:bg-green-700"
+          className="bg-rose-400 text-black  p-2 rounded hover:bg-gray-700"
         >
           Belépés
         </button>
