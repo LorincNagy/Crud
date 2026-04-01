@@ -28,7 +28,7 @@ function SignIn() {
       alert("Sikeres belépés!");
       // Itt döntsd el, hová menjen:
       // Ha még nincs kész a profilja, küldd a /setup-profile-ra
-      navigate("/profile");
+      navigate("/profiles");
     }
     setLoading(false);
   };
