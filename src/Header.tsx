@@ -31,31 +31,41 @@ function Header() {
   return (
     <header className="bg-gray-800 p-4 flex justify-between items-center shadow-md">
       <nav>
-        <ul className="flex space-x-4 font-medium">
-          <li>
-            <NavLink
-              to="/profiles"
-              className={({ isActive }) =>
-                isActive ? "text-white" : "text-indigo-400 hover:text-gray-400"
-              }
-            >
-              Profiles
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/create-profile"
-              className={({ isActive }) =>
-                isActive ? "text-white" : "text-indigo-400 hover:text-gray-400"
-              }
-            >
-              Create Profile
-            </NavLink>
-          </li>
+        <ul className="flex space-x-3 font-medium">
+          {session && (
+            <li>
+              <NavLink
+                to="/profiles"
+                className={({ isActive }) =>
+                  `px-4 py-1.5 rounded-md text-sm transition-all shadow-sm ${
+                    isActive
+                      ? "bg-indigo-600 text-white"
+                      : "bg-gray-700 text-indigo-300 hover:bg-gray-600 hover:text-white"
+                  }`
+                }
+              >
+                Profiles
+              </NavLink>
+            </li>
+          )}
+          {!session && (
+            <li>
+              <NavLink
+                to="/create-profile"
+                className={({ isActive }) =>
+                  `px-4 py-1.5 rounded-md text-sm transition-all shadow-sm ${
+                    isActive
+                      ? "bg-indigo-600 text-white"
+                      : "bg-gray-700 text-indigo-300 hover:bg-gray-600 hover:text-white"
+                  }`
+                }
+              >
+                Create Profile
+              </NavLink>
+            </li>
+          )}
         </ul>
       </nav>
-
-      {/* CSAK HA BE VAN JELENTKEZVE (Van session token) */}
       {session && (
         <button
           onClick={handleSignOut}
