@@ -1,11 +1,16 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { supabase } from "./SupabaseClient";
 
 function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleSignIn = async () => {
+    setLoading(true);
+
     // 1. BEJELENTKEZÉS
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
@@ -14,36 +19,18 @@ function SignIn() {
 
     if (error) {
       alert("Hiba a belépésnél: " + error.message);
+      setLoading(false);
       return;
     }
 
-    const user = data.user;
-
-    if (user) {
-      // 2. ELLENŐRIZZÜK, LÉTEZIK-E MÁR A PROFILJA
-      const { data: existingProfile } = await supabase
-        .from("profiles")
-        .select("id")
-        .eq("id", user.id)
-        .single();
-
-      // 3. HA MÉG NINCS PROFIL, MOST LÉTREHOZZUK
-      if (!existingProfile) {
-        const { error: insertError } = await supabase.from("profiles").insert({
-          id: user.id,
-          name: user.user_metadata.display_name, // Itt vesszük ki a "táskából"
-          color: user.user_metadata.favorite_color,
-        });
-
-        if (insertError) {
-          console.error("Profil mentési hiba:", insertError.message);
-        } else {
-          alert("Első belépés sikeres, profilod létrehozva!");
-        }
-      } else {
-        alert("Üdv újra!");
-      }
+    // 2. HA SIKERÜLT, IRÁNY A PROFIL KITÖLTÉSE (VAGY A FŐOLDAL)
+    if (data.user) {
+      alert("Sikeres belépés!");
+      // Itt döntsd el, hová menjen:
+      // Ha még nincs kész a profilja, küldd a /setup-profile-ra
+      navigate("/profile");
     }
+    setLoading(false);
   };
 
   return (
@@ -63,9 +50,11 @@ function SignIn() {
             Email:
           </span>
           <input
+            required
             type="email"
             placeholder="Email"
-            className="text-rose-400  bg-black px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 outline-none transition-all"
+            value={email}
+            className="text-rose-400 bg-black px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 outline-none transition-all"
             onChange={(e) => setEmail(e.target.value)}
           />
         </label>
@@ -74,17 +63,22 @@ function SignIn() {
             Jelszó:
           </span>
           <input
+            required
             type="password"
             placeholder="Jelszó"
-            className="text-rose-400  bg-black px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 outline-none transition-all"
+            value={password}
+            className="text-rose-400 bg-black px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 outline-none transition-all"
             onChange={(e) => setPassword(e.target.value)}
           />
         </label>
         <button
           type="submit"
-          className="bg-rose-400 text-black  p-2 rounded hover:bg-gray-700"
+          disabled={loading}
+          className={`bg-rose-400 text-black font-bold p-3 rounded-xl shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1 active:scale-95 ${
+            loading ? "opacity-50 cursor-not-allowed" : "hover:bg-rose-500"
+          }`}
         >
-          Belépés
+          {loading ? "Belépés..." : "Belépés"}
         </button>
       </form>
     </div>
