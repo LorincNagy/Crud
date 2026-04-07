@@ -3,6 +3,7 @@ import CreateProfile from "../CreateProfile";
 import Home from "../Home";
 import { Profiles } from "../Profiles";
 import SignIn from "../SignIn";
+import TodoList from "../TodoList";
 
 function AppRouter() {
   return (
@@ -11,6 +12,7 @@ function AppRouter() {
       <Route path="/profiles" element={<Profiles />} />
       <Route path="/create-profile" element={<CreateProfile />} />
       <Route path="/sign-in" element={<SignIn />} />
+      <Route path="/todo-list" element={<TodoList />} />
     </Routes>
   );
 }

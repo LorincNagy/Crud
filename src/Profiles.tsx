@@ -83,7 +83,7 @@ export function Profiles() {
       {/* FORM */}
       <div className="p-6 border-b border-gray-400">
         <h2 className="text-center text-xl font-bold text-rose-400 mb-4">
-          Profilod megadása
+          Profilod szerkesztése
         </h2>
 
         <form
@@ -124,26 +124,43 @@ export function Profiles() {
         Elérhető profilok
       </h2>
 
-      <ul className="p-6 flex flex-col gap-4 break-all">
+      <ul className="p-6 flex flex-col gap-4">
         {profiles.length === 0 ? (
           <p className="text-gray-500 text-center italic">
             Még nincsenek profilok.
           </p>
         ) : (
           profiles.map((profile) => (
-            <li
+            <button
               key={profile.id}
-              className="border border-gray-600 p-3 rounded-lg flex justify-between items-center"
-              style={{ borderLeft: `4px solid ${profile.color}` }}
+              onClick={() => {
+                navigate("/todo-list", { state: { profile } });
+              }}
+              className="group relative border border-gray-600 p-4 rounded-xl flex justify-between items-center bg-gray-900/50 hover:bg-gray-800 transition-all duration-200 active:scale-[0.98] hover:border-rose-400/50 shadow-sm hover:shadow-rose-400/10 hover:cursor-pointer"
+              style={{ borderLeft: `6px solid ${profile.color || "#fb7185"}` }}
             >
-              <span className="font-semibold text-rose-300">
-                {profile.name}
-              </span>
+              <div className="flex flex-col items-start">
+                <span className="font-bold text-lg text-rose-300 group-hover:text-rose-400 transition-colors">
+                  {profile.name}
+                </span>
+                <span className="text-[10px] text-gray-500 uppercase tracking-widest mt-1">
+                  Profil ID: {profile.id?.slice(0, 8)}...
+                </span>
+              </div>
 
-              <span className="text-xs uppercase px-2 py-1 bg-gray-800 text-gray-300 rounded">
-                {profile.color}
-              </span>
-            </li>
+              <div className="flex items-center gap-3">
+                <span
+                  className="w-4 h-4 rounded-full shadow-inner"
+                  style={{ backgroundColor: profile.color }}
+                ></span>
+                <span className="text-xs font-mono uppercase px-2 py-1 bg-black/40 text-gray-400 rounded border border-gray-700">
+                  {profile.color}
+                </span>
+              </div>
+              <div className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity text-rose-400">
+                →
+              </div>
+            </button>
           ))
         )}
       </ul>
