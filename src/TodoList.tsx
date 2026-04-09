@@ -1,28 +1,68 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { supabase } from "./SupabaseClient";
 
+// Típusok definiálása a beágyazott adatokhoz
+interface Todo {
+  id: string;
+  task: string;
+  is_completed: boolean;
+  created_at: string;
+}
+
+interface ProfileWithTodos {
+  id: string;
+  name: string;
+  color: string;
+  todos: Todo[];
+}
+
 export function TodoList() {
   const [task, setTask] = useState("");
+  const [profilesData, setProfilesData] = useState<ProfileWithTodos[]>([]);
   const location = useLocation();
   const navigate = useNavigate();
+  const currentProfile = location.state?.profile;
 
-  const handleAddTodo = async () => {
-    const { error } = await supabase
-      .from("todos")
-      .insert({ member_id: profile.id, task });
+  // Adatok betöltése: Profilok + a hozzájuk tartozó feladatok
+  const fetchAllData = async () => {
+    const { data, error } = await supabase.from("profiles").select(`
+        id,
+        name,
+        color,
+        todos (*)
+      `); // Ez lekéri a profilokat és beágyazza a todos tábla sorait
+
     if (error) {
-      console.error("Hiba a teendő hozzáadásakor:", error);
+      console.error("Hiba az adatok lekérésekor:", error);
+    } else {
+      setProfilesData(data as ProfileWithTodos[]);
     }
   };
 
-  // A state-ből kinyerjük a profile-t.
-  // Érdemes fallback-et (opcionális láncolást) használni, ha valaki közvetlen linkkel jönne ide.
-  const profile = location.state?.profile;
+  useEffect(() => {
+    const doFetch = async () => {
+      await fetchAllData();
+    };
+    doFetch();
+  }, []);
 
-  // Ha nincs profil (pl. frissítették az oldalt és elveszett a state),
-  // visszaküldhetjük a felhasználót a profilválasztóhoz.
-  if (!profile) {
+  const handleAddTodo = async () => {
+    if (!task.trim()) return;
+
+    const { error } = await supabase
+      .from("todos")
+      .insert({ member_id: currentProfile.id, task: task });
+
+    if (error) {
+      console.error("Hiba a hozzáadáskor:", error);
+    } else {
+      setTask("");
+      fetchAllData(); // Frissítjük a teljes listát
+    }
+  };
+
+  if (!currentProfile) {
     return (
       <div className="text-center mt-10">
         <p className="text-rose-400 mb-4">Nem választottál ki profilt!</p>
@@ -37,47 +77,101 @@ export function TodoList() {
   }
 
   return (
-    <div className="mx-auto max-w-md bg-black opacity-80 shadow-xl rounded-2xl overflow-hidden border border-gray-400 mt-10">
-      <div className="p-6 border-b border-gray-400">
-        {/* Itt már használhatod a profil adatait! */}
-        <h1 className="text-center text-xl font-bold text-rose-400 mb-2">
-          {profile.name} teendői
-        </h1>
-        <div
-          className="h-1 w-20 mx-auto mb-4 rounded"
-          style={{ backgroundColor: profile.color }}
-        ></div>
+    <div className="mx-auto max-w-4xl px-4 mt-10 pb-20">
+      {/* Aktív profil és Form */}
+      <div className="bg-black opacity-90 shadow-2xl rounded-2xl border border-gray-600 mb-10 overflow-hidden">
+        <div className="p-4 border-b border-gray-600 text-center bg-gray-900">
+          <p className="text-gray-400 text-sm">Aktív profil:</p>
+          <h1 className="text-xl font-bold text-white uppercase tracking-widest">
+            {currentProfile.name}
+          </h1>
+          <div
+            className="h-1 w-24 mx-auto mt-2 rounded-full"
+            style={{ backgroundColor: currentProfile.color }}
+          ></div>
+        </div>
 
-        <h2 className="text-gray-400 text-center text-sm">
-          Profil azonosító: {profile.id}
-        </h2>
+        <form
+          className="p-6 flex flex-col sm:flex-row gap-3"
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleAddTodo();
+          }}
+        >
+          <input
+            required
+            type="text"
+            placeholder="Mit kell elintézni?"
+            className="flex-1 p-3 rounded-xl bg-gray-800 text-white border border-gray-700 focus:ring-2 focus:ring-rose-400 outline-none"
+            value={task}
+            onChange={(e) => setTask(e.target.value)}
+          />
+          <button
+            type="submit"
+            className="bg-rose-400 text-black font-black py-3 px-8 rounded-xl hover:bg-rose-300 transition-all active:scale-95"
+          >
+            FELVESZ
+          </button>
+        </form>
       </div>
 
-      <form
-        className="p-6"
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleAddTodo();
-        }}
-      >
-        <input
-          required
-          type="text"
-          placeholder="Új teendő..."
-          className="w-full p-3 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-rose-400"
-          value={task}
-          onChange={(e) => setTask(e.target.value)}
-        />
+      {/* CSOPORTOSÍTOTT LISTA */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {profilesData.map((prof) => (
+          <div
+            key={prof.id}
+            className="bg-gray-900 rounded-2xl border border-gray-800 shadow-lg overflow-hidden"
+          >
+            {/* Családtag neve (Szekció fejléc) */}
+            <div
+              className="p-3 border-b border-gray-800 flex items-center justify-between"
+              style={{ backgroundColor: `${prof.color}22` }}
+            >
+              <span
+                className="font-bold text-sm tracking-tighter"
+                style={{ color: prof.color }}
+              >
+                ● {prof.name.toUpperCase()}
+              </span>
+              <span className="bg-gray-800 text-gray-400 text-[10px] px-2 py-1 rounded-full">
+                {prof.todos.length} feladat
+              </span>
+            </div>
 
-        <button
-          type="submit"
-          className="w-full mt-4 bg-rose-400 text-black font-bold py-3 px-4 rounded-xl shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1 active:scale-95"
-        >
-          Hozzáadás
-        </button>
-      </form>
+            {/* Teendők listája az adott személyhez */}
+            <div className="p-4 space-y-3">
+              {prof.todos.length === 0 ? (
+                <p className="text-gray-600 text-xs italic">
+                  Nincs aktív teendő.
+                </p>
+              ) : (
+                prof.todos.map((todo) => (
+                  <div
+                    key={todo.id}
+                    className="group flex items-start gap-3 bg-black p-3 rounded-xl border border-gray-800 hover:border-gray-600 transition-colors"
+                  >
+                    <div
+                      className="mt-1 h-2 w-2 rounded-full shrink-0"
+                      style={{ backgroundColor: prof.color }}
+                    ></div>
+                    <div className="flex flex-col gap-1">
+                      <span className="text-gray-200 text-sm leading-tight">
+                        {todo.task}
+                      </span>
+                      <span className="text-[10px] text-gray-600">
+                        {new Date(todo.created_at).toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </span>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
-
-export default TodoList;
