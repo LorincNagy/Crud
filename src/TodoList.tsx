@@ -125,7 +125,7 @@ export function TodoList() {
             {/* Családtag neve (Szekció fejléc) */}
             <div
               className="p-3 border-b border-gray-800 flex items-center justify-between"
-              style={{ backgroundColor: `${prof.color}22` }}
+              style={{ backgroundColor: "black" }}
             >
               <span
                 className="font-bold text-sm tracking-tighter"
@@ -154,7 +154,8 @@ export function TodoList() {
                       className="mt-1 h-2 w-2 rounded-full shrink-0"
                       style={{ backgroundColor: prof.color }}
                     ></div>
-                    <div className="flex flex-col gap-1">
+
+                    <div className="flex flex-col gap-1 flex-1">
                       <span className="text-gray-200 text-sm leading-tight">
                         {todo.task}
                       </span>
@@ -165,6 +166,24 @@ export function TodoList() {
                         })}
                       </span>
                     </div>
+
+                    {/* CSAK HA SAJÁT: Itt jönnek a gombok */}
+                    {currentProfile.id === prof.id && (
+                      <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <button
+                          onClick={() => handleEdit(todo)}
+                          className="text-gray-500 hover:text-rose-400 text-xs"
+                        >
+                          Szerkesztés
+                        </button>
+                        <button
+                          onClick={() => handleDelete(todo.id)}
+                          className="text-gray-500 hover:text-red-500 text-xs"
+                        >
+                          Törlés
+                        </button>
+                      </div>
+                    )}
                   </div>
                 ))
               )}
@@ -175,3 +194,5 @@ export function TodoList() {
     </div>
   );
 }
+
+export default TodoList;
