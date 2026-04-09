@@ -4,6 +4,7 @@ import { supabase } from "./SupabaseClient";
 function CreateProfile() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [userName, setUserName] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSignUp = async () => {
@@ -14,6 +15,9 @@ function CreateProfile() {
       password: password,
       options: {
         emailRedirectTo: `${import.meta.env.VITE_BASE_URL}/sign-in`,
+        data: {
+          userName: userName,
+        },
       },
     });
 
@@ -21,7 +25,7 @@ function CreateProfile() {
       alert("Hiba: " + error.message);
     } else {
       alert(
-        "Regisztráció sikeres! Ellenőrizd az e-mailedet a visszaigazoláshoz.",
+        "Sikeres Regisztráció! Ellenőrizd az e-mailedet a visszaigazoláshoz.",
       );
     }
 
@@ -68,6 +72,20 @@ function CreateProfile() {
             className="text-rose-400 bg-black px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 outline-none transition-all"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+          />
+        </label>
+
+        <label className="flex flex-col gap-2">
+          <span className="text-sm font-semibold text-rose-400 ml-1">
+            Felhasználónév:
+          </span>
+          <input
+            required
+            type="text"
+            placeholder="Felhasználónév"
+            className="text-rose-400 bg-black px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 outline-none transition-all"
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
           />
         </label>
 

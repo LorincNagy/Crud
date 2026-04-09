@@ -1,3 +1,4 @@
+import type { User } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "./SupabaseClient";
@@ -11,6 +12,7 @@ interface Profile {
 export function Profiles() {
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [loading, setLoading] = useState(true);
+  const [authUser, setAuthUser] = useState<User | null>(null);
 
   const [newName, setNewName] = useState("");
   const [newColor, setNewColor] = useState("");
@@ -22,6 +24,11 @@ export function Profiles() {
   useEffect(() => {
     async function fetchProfiles() {
       setLoading(true);
+
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      setAuthUser(user);
 
       const { data, error } = await supabase.from("profiles").select("*");
 
@@ -41,11 +48,7 @@ export function Profiles() {
   const handleSave = async () => {
     setAdding(true);
 
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    if (!user) {
+    if (!authUser) {
       alert("Be kell jelentkezned!");
       setAdding(false);
       navigate("/sign-in");
@@ -53,7 +56,7 @@ export function Profiles() {
     }
 
     const { error } = await supabase.from("profiles").upsert({
-      id: user.id,
+      id: authUser.id,
       name: newName,
       color: newColor,
     });
@@ -79,7 +82,17 @@ export function Profiles() {
   }
 
   return (
-    <div className="mx-auto max-w-md bg-black opacity-80 shadow-xl rounded-2xl overflow-hidden border border-gray-400 mt-10">
+    <div className="mx-auto max-w-md bg-black opacity-90 shadow-2xl rounded-2xl overflow-hidden border border-gray-600 mt-10">
+      {/* ÜDVÖZLÉS FEJLÉC */}
+      <div className="bg-gray-900/80 p-4 border-b border-gray-600 text-center">
+        <p className="text-gray-500 text-[10px] uppercase tracking-[0.2em] mb-1">
+          Bejelentkezve mint
+        </p>
+        <h1 className="text-white text-lg font-black tracking-tight">
+          Üdvözöljük
+          {authUser?.user_metadata?.userName}!
+        </h1>
+      </div>
       {/* FORM */}
       <div className="p-6 border-b border-gray-400">
         <h2 className="text-center text-xl font-bold text-rose-400 mb-4">
@@ -95,7 +108,7 @@ export function Profiles() {
         >
           <input
             required
-            placeholder="Neved"
+            placeholder="Felhasználónév"
             className="bg-black text-rose-400 border border-gray-500 p-2 rounded outline-none focus:ring-1 focus:ring-rose-400"
             value={newName}
             onChange={(e) => setNewName(e.target.value)}

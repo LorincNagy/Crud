@@ -1,3 +1,4 @@
+import type { User } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { supabase } from "./SupabaseClient";
@@ -19,6 +20,7 @@ interface ProfileWithTodos {
 
 export function TodoList() {
   const [task, setTask] = useState("");
+  const [user, setUser] = useState<User | null>(null);
   const [profilesData, setProfilesData] = useState<ProfileWithTodos[]>([]);
   const location = useLocation();
   const navigate = useNavigate();
@@ -42,6 +44,15 @@ export function TodoList() {
 
   useEffect(() => {
     const doFetch = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      setUser(user);
+      if (!user) {
+        alert("Be kell jelentkezned!");
+        navigate("/sign-in");
+        return;
+      }
       await fetchAllData();
     };
     doFetch();
@@ -168,7 +179,7 @@ export function TodoList() {
                     </div>
 
                     {/* CSAK HA SAJÁT: Itt jönnek a gombok */}
-                    {currentProfile.id === prof.id && (
+                    {user?.id === prof.id && (
                       <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                         <button
                           onClick={() => handleEdit(todo)}
