@@ -13,7 +13,7 @@ interface Todo {
 
 interface ProfileWithTodos {
   id: string;
-  name: string;
+  userName: string;
   color: string;
   todos: Todo[];
 }
@@ -30,7 +30,7 @@ export function TodoList() {
   const fetchAllData = async () => {
     const { data, error } = await supabase.from("profiles").select(`
         id,
-        name,
+        userName,
         color,
         todos (*)
       `); // Ez lekéri a profilokat és beágyazza a todos tábla sorait
@@ -56,7 +56,7 @@ export function TodoList() {
       await fetchAllData();
     };
     doFetch();
-  }, []);
+  }, [navigate]);
 
   const handleAddTodo = async () => {
     if (!task.trim()) return;
@@ -94,7 +94,7 @@ export function TodoList() {
         <div className="p-4 border-b border-gray-600 text-center bg-gray-900">
           <p className="text-gray-400 text-sm">Aktív profil:</p>
           <h1 className="text-xl font-bold text-white uppercase tracking-widest">
-            {currentProfile.name}
+            {currentProfile.userName}
           </h1>
           <div
             className="h-1 w-24 mx-auto mt-2 rounded-full"
@@ -142,7 +142,7 @@ export function TodoList() {
                 className="font-bold text-sm tracking-tighter"
                 style={{ color: prof.color }}
               >
-                ● {prof.name.toUpperCase()}
+                ● {prof.userName.toUpperCase()}
               </span>
               <span className="bg-gray-800 text-gray-400 text-[10px] px-2 py-1 rounded-full">
                 {prof.todos.length} feladat

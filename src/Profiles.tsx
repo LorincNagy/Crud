@@ -57,7 +57,7 @@ export function Profiles() {
 
     const { error } = await supabase.from("profiles").upsert({
       id: authUser.id,
-      name: newName,
+      userName: newName,
       color: newColor,
     });
 

@@ -42,7 +42,7 @@ function Header() {
   return (
     <header className="bg-slate-950 border-b border-slate-800 p-4 flex justify-between items-center shadow-lg relative">
       {/* Egy vékony neon csík a fejléc alján */}
-      <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent"></div>
+      <div className="absolute bottom-0 left-0 w-full h-px bg-linear-to-r from-transparent via-cyan-500/50 to-transparent"></div>
 
       <nav>
         <ul className="flex space-x-3 items-center">
@@ -60,7 +60,7 @@ function Header() {
           {session && (
             <li>
               <NavLink to="/profiles" className={navLinkStyling}>
-                Profiles
+                Profilok
               </NavLink>
             </li>
           )}
@@ -68,8 +68,8 @@ function Header() {
           {/* CREATE PROFILE */}
           {!isCreateProfileRoute && (
             <li>
-              <NavLink to="/create-profile" className={navLinkStyling}>
-                Register
+              <NavLink to="/sign-up" className={navLinkStyling}>
+                Regisztráció
               </NavLink>
             </li>
           )}
@@ -78,7 +78,7 @@ function Header() {
           {!session && !isSignInRoute && (
             <li>
               <NavLink to="/sign-in" className={navLinkStyling}>
-                Sign In
+                Bejelentkezés
               </NavLink>
             </li>
           )}
@@ -89,7 +89,7 @@ function Header() {
         {/* Felhasználónév kijelzése a fejlécben, ha be van lépve */}
         {session?.user?.user_metadata?.userName && (
           <span className="hidden md:block text-[10px] text-slate-500 uppercase tracking-widest font-bold mr-2">
-            Hi,{" "}
+            Üdv,{" "}
             <span className="text-cyan-400">
               {session.user.user_metadata.userName}
             </span>
@@ -101,7 +101,7 @@ function Header() {
             onClick={handleSignOut}
             className="bg-transparent border border-rose-500/50 text-rose-500 hover:bg-rose-500 hover:text-white text-[10px] font-black uppercase tracking-widest py-1.5 px-4 rounded-xl transition-all active:scale-95"
           >
-            Sign Out
+            Kijelentkezés
           </button>
         )}
 
@@ -110,7 +110,7 @@ function Header() {
             onClick={() => navigate("/")}
             className="bg-slate-800 text-slate-300 hover:text-cyan-400 text-[10px] font-black uppercase tracking-widest py-1.5 px-4 rounded-xl border border-slate-700 transition-all active:scale-95"
           >
-            Home
+            Vissza a főoldalra
           </button>
         )}
       </div>
