@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import CreateProfile from "../CreateProfile";
+import SignUp from "../CreateProfile";
 import Home from "../Home";
 import { Profiles } from "../Profiles";
 import SignIn from "../SignIn";
@@ -10,7 +10,7 @@ function AppRouter() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/profiles" element={<Profiles />} />
-      <Route path="/create-profile" element={<CreateProfile />} />
+      <Route path="/sign-up" element={<SignUp />} />
       <Route path="/sign-in" element={<SignIn />} />
       <Route path="/todo-list" element={<TodoList />} />
     </Routes>

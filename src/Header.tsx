@@ -1,7 +1,7 @@
 import type { Session } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import { supabase } from "./SupabaseClient"; // Győződj meg róla, hogy az út jó!
+import { supabase } from "./SupabaseClient";
 
 function Header() {
   const [session, setSession] = useState<Session | null>(null);
@@ -31,80 +31,86 @@ function Header() {
     await supabase.auth.signOut();
   };
 
+  // Közös stílus a NavLinkekhez
+  const navLinkStyling = ({ isActive }: { isActive: boolean }) =>
+    `px-4 py-1.5 rounded-xl text-xs uppercase tracking-widest font-bold transition-all shadow-sm ${
+      isActive
+        ? "bg-cyan-500 text-slate-950 shadow-[0_0_15px_-3px_rgba(34,211,238,0.6)]"
+        : "bg-slate-900 text-cyan-500 border border-slate-700 hover:border-cyan-500/50 hover:bg-slate-800"
+    }`;
+
   return (
-    <header className="bg-gray-800 p-4 flex justify-between items-center shadow-md">
+    <header className="bg-slate-950 border-b border-slate-800 p-4 flex justify-between items-center shadow-lg relative">
+      {/* Egy vékony neon csík a fejléc alján */}
+      <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent"></div>
+
       <nav>
-        <ul className="flex space-x-3 font-medium">
-          {/* PROFILES - SZIGORÚAN CSAK HA VAN SESSION */}
+        <ul className="flex space-x-3 items-center">
+          {/* LOGO vagy App név kicsiben */}
+          <li className="mr-4">
+            <span
+              className="text-cyan-500 font-black tracking-tighter text-xl italic cursor-pointer"
+              onClick={() => navigate("/")}
+            >
+              TODO<span className="text-slate-500">APP</span>
+            </span>
+          </li>
+
+          {/* PROFILES */}
           {session && (
             <li>
-              <NavLink
-                to="/profiles"
-                className={({ isActive }) =>
-                  `px-4 py-1.5 rounded-md text-sm transition-all shadow-sm ${
-                    isActive
-                      ? "bg-indigo-600 text-white"
-                      : "bg-gray-700 text-indigo-300 hover:bg-gray-600 hover:text-white"
-                  }`
-                }
-              >
+              <NavLink to="/profiles" className={navLinkStyling}>
                 Profiles
               </NavLink>
             </li>
           )}
 
-          {/* CREATE PROFILE - Ott van a kezdőlapon (isHomeRoute) VAGY ha be van lépve (session) */}
+          {/* CREATE PROFILE */}
           {!isCreateProfileRoute && (
             <li>
-              <NavLink
-                to="/create-profile"
-                className={({ isActive }) =>
-                  `px-4 py-1.5 rounded-md text-sm transition-all shadow-sm ${
-                    isActive
-                      ? "bg-indigo-600 text-white"
-                      : "bg-gray-700 text-indigo-300 hover:bg-gray-600 hover:text-white"
-                  }`
-                }
-              >
-                Create Profile
+              <NavLink to="/create-profile" className={navLinkStyling}>
+                Register
               </NavLink>
             </li>
           )}
 
-          {/* SIGN IN - Csak ha NINCS session ÉS nem a login oldalon vagyunk */}
+          {/* SIGN IN */}
           {!session && !isSignInRoute && (
             <li>
-              <NavLink
-                to="/sign-in"
-                className={({ isActive }) =>
-                  `px-4 py-1.5 rounded-md text-sm transition-all shadow-sm ${
-                    isActive
-                      ? "bg-indigo-600 text-white"
-                      : "bg-gray-700 text-indigo-300 hover:bg-gray-600 hover:text-white"
-                  }`
-                }
-              >
+              <NavLink to="/sign-in" className={navLinkStyling}>
                 Sign In
               </NavLink>
             </li>
           )}
         </ul>
       </nav>
-      <div className="flex gap-2">
+
+      <div className="flex gap-3 items-center">
+        {/* Felhasználónév kijelzése a fejlécben, ha be van lépve */}
+        {session?.user?.user_metadata?.userName && (
+          <span className="hidden md:block text-[10px] text-slate-500 uppercase tracking-widest font-bold mr-2">
+            Hi,{" "}
+            <span className="text-cyan-400">
+              {session.user.user_metadata.userName}
+            </span>
+          </span>
+        )}
+
         {session && (
           <button
             onClick={handleSignOut}
-            className="bg-rose-500 hover:bg-rose-600 text-white text-xs font-bold py-1 px-3 rounded transition-all active:scale-95"
+            className="bg-transparent border border-rose-500/50 text-rose-500 hover:bg-rose-500 hover:text-white text-[10px] font-black uppercase tracking-widest py-1.5 px-4 rounded-xl transition-all active:scale-95"
           >
             Sign Out
           </button>
         )}
+
         {!isHomeRoute && (
           <button
             onClick={() => navigate("/")}
-            className="bg-rose-500 hover:bg-rose-600 text-white text-xs font-bold py-1 px-3 rounded transition-all active:scale-95"
+            className="bg-slate-800 text-slate-300 hover:text-cyan-400 text-[10px] font-black uppercase tracking-widest py-1.5 px-4 rounded-xl border border-slate-700 transition-all active:scale-95"
           >
-            Back to Home page
+            Home
           </button>
         )}
       </div>

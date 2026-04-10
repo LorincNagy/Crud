@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { supabase } from "./SupabaseClient";
 
-function CreateProfile() {
+function SignUp() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
@@ -33,57 +35,62 @@ function CreateProfile() {
   };
 
   return (
-    <div className="mx-auto max-w-md bg-black opacity-80 shadow-xl rounded-2xl overflow-hidden border border-gray-400 mt-10">
-      <h2 className="text-center opacity-70 p-5 text-xl font-bold text-rose-400 border-b">
-        Fiók létrehozása
-      </h2>
+    <div className="mx-auto max-w-md bg-slate-950 shadow-[0_0_50px_-12px_rgba(34,211,238,0.2)] rounded-3xl overflow-hidden border border-slate-800 mt-10">
+      {/* FEJLÉC */}
+      <div className="bg-slate-900/50 p-6 border-b border-slate-800 text-center relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-cyan-500 to-transparent"></div>
+        <h2 className="text-slate-100 text-xl font-bold tracking-wider uppercase">
+          Fiók létrehozása
+        </h2>
+      </div>
 
       <form
-        className="p-6 flex flex-col gap-4"
+        className="p-8 flex flex-col gap-5 bg-slate-950/50"
         onSubmit={(e) => {
           e.preventDefault();
           handleSignUp();
         }}
       >
         {/* EMAIL MEZŐ */}
-        <label className="flex flex-col gap-2">
-          <span className="text-sm font-semibold text-rose-400 ml-1">
-            Email:
+        <label className="flex flex-col gap-1">
+          <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-2">
+            Email cím
           </span>
           <input
             required
             type="email"
             placeholder="example@mail.com"
-            className="text-rose-400 bg-black px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 outline-none transition-all"
+            className="w-full bg-slate-900 text-cyan-50 border border-slate-700 p-3 rounded-xl outline-none focus:border-cyan-500/50 transition-all shadow-inner placeholder:text-slate-700"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
         </label>
 
         {/* JELSZÓ MEZŐ */}
-        <label className="flex flex-col gap-2">
-          <span className="text-sm font-semibold text-rose-400 ml-1">
-            Jelszó:
+        <label className="flex flex-col gap-1">
+          <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-2">
+            Jelszó
           </span>
           <input
             required
             type="password"
             placeholder="******"
-            className="text-rose-400 bg-black px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 outline-none transition-all"
+            className="w-full bg-slate-900 text-cyan-50 border border-slate-700 p-3 rounded-xl outline-none focus:border-cyan-500/50 transition-all shadow-inner placeholder:text-slate-700"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </label>
 
-        <label className="flex flex-col gap-2">
-          <span className="text-sm font-semibold text-rose-400 ml-1">
-            Felhasználónév:
+        {/* FELHASZNÁLÓNÉV MEZŐ */}
+        <label className="flex flex-col gap-1">
+          <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-2">
+            Hogy hívjunk? (Felhasználónév)
           </span>
           <input
             required
             type="text"
-            placeholder="Felhasználónév"
-            className="text-rose-400 bg-black px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 outline-none transition-all"
+            placeholder="Pl. Kovacs_Istvan"
+            className="w-full bg-slate-900 text-cyan-50 border border-slate-700 p-3 rounded-xl outline-none focus:border-cyan-500/50 transition-all shadow-inner placeholder:text-slate-700"
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
           />
@@ -91,18 +98,28 @@ function CreateProfile() {
 
         <button
           disabled={loading}
-          className={`w-full bg-rose-400 text-black font-bold py-3 px-4 rounded-xl shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1 active:scale-95 ${
+          className={`mt-4 w-full bg-cyan-500 text-slate-950 font-black py-4 px-4 rounded-xl shadow-[0_4px_20px_-5px_rgba(34,211,238,0.4)] transition-all duration-300 ease-in-out transform active:scale-95 ${
             loading
               ? "opacity-50 cursor-not-allowed"
-              : "hover:bg-gray-500 hover:text-rose-400"
+              : "hover:bg-cyan-400 hover:-translate-y-1"
           }`}
           type="submit"
         >
-          {loading ? "Folyamatban..." : "Regisztráció"}
+          {loading ? "FOLYAMATBAN..." : "REGISZTRÁCIÓ"}
         </button>
+
+        <p className="text-center text-[10px] text-slate-600 uppercase tracking-widest mt-2">
+          Már van fiókod?
+          <button
+            className="text-cyan-600 hover:text-cyan-400 cursor-pointer transition-colors"
+            onClick={() => navigate("/sign-in")}
+          >
+            Bejelentkezés
+          </button>
+        </p>
       </form>
     </div>
   );
 }
 
-export default CreateProfile;
+export default SignUp;

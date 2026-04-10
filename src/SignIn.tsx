@@ -11,7 +11,6 @@ function SignIn() {
   const handleSignIn = async () => {
     setLoading(true);
 
-    // 1. BEJELENTKEZÉS
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -23,63 +22,89 @@ function SignIn() {
       return;
     }
 
-    // 2. HA SIKERÜLT, IRÁNY A PROFIL KITÖLTÉSE (VAGY A FŐOLDAL)
     if (data.user) {
-      alert("Sikeres belépés!");
-      // Itt döntsd el, hová menjen:
-      // Ha még nincs kész a profilja, küldd a /setup-profile-ra
+      // Itt már nem alertet használunk, mert az megtöri a designt,
+      // de a logikád szerint maradhat, ha szeretnéd.
       navigate("/profiles");
     }
     setLoading(false);
   };
 
   return (
-    <div className="mx-auto max-w-md bg-black opacity-80 shadow-xl rounded-2xl overflow-hidden border border-gray-400 mt-10">
-      <h2 className="text-center opacity-70 p-5 text-xl font-bold text-rose-400 border-b">
-        Bejelentkezés
-      </h2>
+    <div className="mx-auto max-w-md bg-slate-950 shadow-[0_0_50px_-12px_rgba(34,211,238,0.2)] rounded-3xl overflow-hidden border border-slate-800 mt-10">
+      {/* FEJLÉC - Díszcsíkkal */}
+      <div className="bg-slate-900/50 p-6 border-b border-slate-800 text-center relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-500 to-transparent"></div>
+        <h2 className="text-slate-100 text-xl font-bold tracking-wider uppercase">
+          Bejelentkezés
+        </h2>
+      </div>
+
       <form
-        className="p-6 flex flex-col gap-4"
+        className="p-8 flex flex-col gap-5 bg-slate-950/50"
         onSubmit={(e) => {
           e.preventDefault();
           handleSignIn();
         }}
       >
-        <label className="flex flex-col gap-2">
-          <span className="text-sm font-semibold text-rose-400 ml-1">
-            Email:
+        {/* EMAIL MEZŐ */}
+        <label className="flex flex-col gap-1">
+          <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-2">
+            Email cím
           </span>
           <input
             required
             type="email"
-            placeholder="Email"
+            placeholder="nev@email.hu"
             value={email}
-            className="text-rose-400 bg-black px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 outline-none transition-all"
+            className="w-full bg-slate-900 text-cyan-50 border border-slate-700 p-3 rounded-xl outline-none focus:border-cyan-500/50 transition-all shadow-inner placeholder:text-slate-700"
             onChange={(e) => setEmail(e.target.value)}
           />
         </label>
-        <label className="flex flex-col gap-2">
-          <span className="text-sm font-semibold text-rose-400 ml-1">
-            Jelszó:
+
+        {/* JELSZÓ MEZŐ */}
+        <label className="flex flex-col gap-1">
+          <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-2">
+            Jelszó
           </span>
           <input
             required
             type="password"
-            placeholder="Jelszó"
+            placeholder="******"
             value={password}
-            className="text-rose-400 bg-black px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 outline-none transition-all"
+            className="w-full bg-slate-900 text-cyan-50 border border-slate-700 p-3 rounded-xl outline-none focus:border-cyan-500/50 transition-all shadow-inner placeholder:text-slate-700"
             onChange={(e) => setPassword(e.target.value)}
           />
         </label>
+
+        {/* BEJELENTKEZÉS GOMB */}
         <button
           type="submit"
           disabled={loading}
-          className={`bg-rose-400 text-black font-bold p-3 rounded-xl shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1 active:scale-95 ${
-            loading ? "opacity-50 cursor-not-allowed" : "hover:bg-rose-500"
+          className={`mt-4 w-full bg-cyan-500 text-slate-950 font-black py-4 px-4 rounded-xl shadow-[0_4px_20px_-5px_rgba(34,211,238,0.4)] transition-all duration-300 ease-in-out transform active:scale-95 ${
+            loading
+              ? "opacity-50 cursor-not-allowed"
+              : "hover:bg-cyan-400 hover:-translate-y-1"
           }`}
         >
-          {loading ? "Belépés..." : "Belépés"}
+          {loading ? "AZONOSÍTÁS..." : "BELÉPÉS"}
         </button>
+
+        {/* LÁBJEGYZET */}
+        <div className="mt-4 flex flex-col gap-2 items-center">
+          <p className="text-[10px] text-slate-600 uppercase tracking-widest">
+            Még nincs fiókod?
+            <button
+              onClick={() => navigate("/sign-up")}
+              className="text-cyan-600 hover:text-cyan-400 cursor-pointer transition-colors font-bold"
+            >
+              Regisztrálj itt
+            </button>
+          </p>
+          <p className="text-[9px] text-slate-700 italic">
+            Elfelejtett jelszó?
+          </p>
+        </div>
       </form>
     </div>
   );
