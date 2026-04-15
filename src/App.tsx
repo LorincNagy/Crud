@@ -29,21 +29,41 @@ function App() {
     return () => clearInterval(intervalId);
   }, []);
 
+  // Segédfüggvény a tartalom típusának eldöntéséhez
+  const renderBackground = (url: string) => {
+    const isVideo = url.toLowerCase().endsWith(".mp4");
+
+    if (isVideo) {
+      return (
+        <video
+          src={url}
+          autoPlay
+          loop
+          playsInline
+          muted
+          className="absolute inset-0 w-full h-full object-contain"
+        />
+      );
+    }
+
+    return (
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${url})` }}
+      />
+    );
+  };
+
   return (
     <BrowserRouter>
-      <div className="relative min-h-screen w-full flex flex-col bg-black">
-        {/* ALSÓ RÉTEG: Mindig az előző kép van itt fixen */}
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${prevBg})` }}
-        />
+      <div className="relative min-h-screen w-full flex flex-col bg-black overflow-hidden">
+        {/* ALSÓ RÉTEG */}
+        <div>{renderBackground(prevBg)}</div>
 
-        {/* FELSŐ RÉTEG: Ez úszik be az új képpel */}
-        <div
-          key={bgUrl}
-          className="absolute inset-0 bg-cover bg-center transition-opacity animate-fade-in"
-          style={{ backgroundImage: `url(${bgUrl})` }}
-        />
+        {/* FELSŐ RÉTEG (Animált) */}
+        <div key={bgUrl} className="animate-fade-in z-0">
+          {renderBackground(bgUrl)}
+        </div>
 
         {/* TARTALOM */}
         <div className="relative z-10 flex flex-col min-h-screen">

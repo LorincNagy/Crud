@@ -90,8 +90,8 @@ export function TodoList() {
   return (
     <div className="mx-auto max-w-4xl px-4 mt-10 pb-20">
       {/* Aktív profil és Form */}
-      <div className="bg-black opacity-90 shadow-2xl rounded-2xl border border-gray-600 mb-10 overflow-hidden">
-        <div className="p-4 border-b border-gray-600 text-center bg-gray-900">
+      <div className="bg-slate-900/50 shadow-2xl rounded-2xl border border-gray-600 mb-10 overflow-hidden">
+        <div className="p-4 border-b border-gray-600 text-center bg-slate-900/50">
           <p className="text-gray-400 text-sm">Aktív profil:</p>
           <h1 className="text-xl font-bold text-white uppercase tracking-widest">
             {currentProfile.userName}
@@ -113,13 +113,13 @@ export function TodoList() {
             required
             type="text"
             placeholder="Mit kell elintézni?"
-            className="flex-1 p-3 rounded-xl bg-gray-800 text-white border border-gray-700 focus:ring-2 focus:ring-rose-400 outline-none"
+            className="flex-1 p-3 rounded-xl bg-gray-800 text-white border border-gray-700 focus:ring-2 focus:ring-cyan-400 outline-none text-xl"
             value={task}
             onChange={(e) => setTask(e.target.value)}
           />
           <button
             type="submit"
-            className="bg-rose-400 text-black font-black py-3 px-8 rounded-xl hover:bg-rose-300 transition-all active:scale-95"
+            className="bg-cyan-400 text-black font-black py-3 px-8 rounded-xl hover:bg-cyan-300 transition-all active:scale-95"
           >
             FELVESZ
           </button>
@@ -131,20 +131,17 @@ export function TodoList() {
         {profilesData.map((prof) => (
           <div
             key={prof.id}
-            className="bg-gray-900 rounded-2xl border border-gray-800 shadow-lg overflow-hidden"
+            className="bg-slate-900/50 rounded-2xl border border-gray-800 shadow-lg overflow-hidden"
           >
             {/* Családtag neve (Szekció fejléc) */}
-            <div
-              className="p-3 border-b border-gray-800 flex items-center justify-between"
-              style={{ backgroundColor: "black" }}
-            >
+            <div className="p-3 border-b border-gray-800 flex items-center justify-between">
               <span
                 className="font-bold text-sm tracking-tighter"
                 style={{ color: prof.color }}
               >
                 ● {prof.userName.toUpperCase()}
               </span>
-              <span className="bg-gray-800 text-gray-400 text-[10px] px-2 py-1 rounded-full">
+              <span className="bg-gray-800 text-gray-200 text-1rem px-2 py-1 rounded-full">
                 {prof.todos.length} feladat
               </span>
             </div>
@@ -159,7 +156,7 @@ export function TodoList() {
                 prof.todos.map((todo) => (
                   <div
                     key={todo.id}
-                    className="group flex items-start gap-3 bg-black p-3 rounded-xl border border-gray-800 hover:border-gray-600 transition-colors"
+                    className="group flex items-start gap-3 bg-slate-900/50 p-3 rounded-xl border border-gray-800 hover:border-gray-600 transition-colors"
                   >
                     <div
                       className="mt-1 h-2 w-2 rounded-full shrink-0"
@@ -167,10 +164,10 @@ export function TodoList() {
                     ></div>
 
                     <div className="flex flex-col gap-1 flex-1">
-                      <span className="text-gray-200 text-sm leading-tight">
+                      <span className="text-gray-200 text-1rem leading-tight">
                         {todo.task}
                       </span>
-                      <span className="text-[10px] text-gray-600">
+                      <span className="text-1rem text-gray-200">
                         {new Date(todo.created_at).toLocaleTimeString([], {
                           hour: "2-digit",
                           minute: "2-digit",
@@ -180,16 +177,16 @@ export function TodoList() {
 
                     {/* CSAK HA SAJÁT: Itt jönnek a gombok */}
                     {user?.id === prof.id && (
-                      <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className="flex gap-2 mt-2">
                         <button
                           onClick={() => handleEdit(todo)}
-                          className="text-gray-500 hover:text-rose-400 text-xs"
+                          className="px-2 py-0.5 bg-slate-900 border border-slate-700 text-slate-400 hover:text-cyan-400 hover:border-cyan-500/50 rounded text-[10px] uppercase font-bold transition-all"
                         >
                           Szerkesztés
                         </button>
                         <button
                           onClick={() => handleDelete(todo.id)}
-                          className="text-gray-500 hover:text-red-500 text-xs"
+                          className="px-2 py-0.5 bg-slate-900 border border-slate-700 text-slate-400 hover:text-red-400 hover:border-red-500/50 rounded text-[10px] uppercase font-bold transition-all"
                         >
                           Törlés
                         </button>

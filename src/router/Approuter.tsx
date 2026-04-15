@@ -1,8 +1,8 @@
 import { Route, Routes } from "react-router-dom";
-import SignUp from "../CreateProfile";
 import Home from "../Home";
 import { Profiles } from "../Profiles";
 import SignIn from "../SignIn";
+import SignUp from "../SignUp";
 import TodoList from "../TodoList";
 
 function AppRouter() {

@@ -5,7 +5,7 @@ import { supabase } from "./SupabaseClient";
 
 interface Profile {
   id?: string;
-  name: string;
+  userName: string;
   color: string;
 }
 
@@ -82,10 +82,10 @@ export function Profiles() {
   }
 
   return (
-    <div className="mx-auto max-w-md bg-slate-950 shadow-[0_0_50px_-12px_rgba(34,211,238,0.2)] rounded-3xl overflow-hidden border border-slate-800 mt-10">
+    <div className="mx-auto max-w-md rounded-3xl overflow-hidden border border-slate-800 mt-10">
       {/* ÜDVÖZLÉS FEJLÉC - Modern, sötét, neonos beütéssel */}
       <div className="bg-slate-900/50 p-6 border-b border-slate-800 text-center relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-500 to-transparent"></div>
+        <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-cyan-500 to-transparent"></div>
         <h1 className="text-slate-100 text-xl font-light tracking-tight">
           Üdvözöljük,{" "}
           <span className="text-cyan-400 font-bold drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]">
@@ -97,7 +97,7 @@ export function Profiles() {
 
       {/* FORM - Letisztultabb inputok */}
       <div className="p-8 border-b border-slate-800 bg-slate-950/50">
-        <h2 className="text-center text-sm uppercase tracking-[0.3em] font-semibold text-slate-500 mb-6">
+        <h2 className="text-center text-sm uppercase tracking-[0.3em] font-semibold text-slate-300 mb-6">
           Profil Beállítások
         </h2>
 
@@ -109,7 +109,7 @@ export function Profiles() {
           className="flex flex-col gap-4"
         >
           <div className="space-y-1">
-            <label className="text-[10px] text-slate-500 ml-2 uppercase font-bold">
+            <label className="text-[10px] font-bold text-slate-300 uppercase tracking-widest ml-2">
               Megjelenítési név
             </label>
             <input
@@ -122,7 +122,7 @@ export function Profiles() {
           </div>
 
           <div className="space-y-1">
-            <label className="text-[10px] text-slate-500 ml-2 uppercase font-bold">
+            <label className="text-[10px] font-bold text-slate-300 uppercase tracking-widest ml-2">
               Téma színe (Hex kód)
             </label>
             <input
@@ -146,13 +146,13 @@ export function Profiles() {
 
       {/* LISTA - Üveg-hatású kártyák */}
       <div className="p-6 bg-slate-900/20">
-        <h2 className="text-center text-[10px] uppercase tracking-[0.2em] font-bold text-slate-600 mb-6">
+        <h2 className="text-center text-[10px] uppercase tracking-[0.2em] font-bold text-slate-300 mb-6">
           Válassz aktív profilt
         </h2>
 
         <div className="grid grid-cols-1 gap-3">
           {profiles.length === 0 ? (
-            <p className="text-slate-600 text-center text-sm italic py-10">
+            <p className="text-slate-300 text-center text-sm italic py-10">
               Még nincsenek profilok.
             </p>
           ) : (
@@ -176,9 +176,9 @@ export function Profiles() {
 
                 <div className="flex-1 text-left">
                   <div className="text-slate-200 font-bold group-hover:text-cyan-400 transition-colors">
-                    {profile.name}
+                    {profile.userName}
                   </div>
-                  <div className="text-[9px] text-slate-500 font-mono">
+                  <div className="text-2rem text-slate-300 font-mono">
                     ID: {profile.id?.slice(0, 8)}
                   </div>
                 </div>

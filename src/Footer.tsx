@@ -5,11 +5,11 @@ function Footer() {
       <div className="absolute top-0 left-0 w-full h-px bg-linear-to-r from-transparent via-cyan-500/30 to-transparent"></div>
 
       <div className="flex flex-col items-center gap-2">
-        <p className="text-cyan-500 font-black tracking-[0.4em] text-xs uppercase italic">
-          Family Todo <span className="text-slate-600 font-light">App</span>
+        <p className="text-cyan-500 font-black text-2 rem  uppercase italic">
+          Family Todo <span className="text-slate-200 font-light">App</span>
         </p>
 
-        <p className="text-[9px] text-slate-700 uppercase tracking-widest font-bold">
+        <p className="text-1rem text-slate-200 uppercase tracking-widest font-bold">
           &copy; {new Date().getFullYear()} — System Operational
         </p>
       </div>

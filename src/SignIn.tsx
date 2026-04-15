@@ -31,10 +31,10 @@ function SignIn() {
   };
 
   return (
-    <div className="mx-auto max-w-md bg-slate-950 shadow-[0_0_50px_-12px_rgba(34,211,238,0.2)] rounded-3xl overflow-hidden border border-slate-800 mt-10">
+    <div className="mx-auto max-w-md rounded-3xl overflow-hidden border border-slate-800 mt-10">
       {/* FEJLÉC - Díszcsíkkal */}
       <div className="bg-slate-900/50 p-6 border-b border-slate-800 text-center relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-500 to-transparent"></div>
+        <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-cyan-500 to-transparent"></div>
         <h2 className="text-slate-100 text-xl font-bold tracking-wider uppercase">
           Bejelentkezés
         </h2>
@@ -49,7 +49,7 @@ function SignIn() {
       >
         {/* EMAIL MEZŐ */}
         <label className="flex flex-col gap-1">
-          <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-2">
+          <span className="text-[10px] font-bold text-slate-300 uppercase tracking-widest ml-2">
             Email cím
           </span>
           <input
@@ -57,14 +57,14 @@ function SignIn() {
             type="email"
             placeholder="nev@email.hu"
             value={email}
-            className="w-full bg-slate-900 text-cyan-50 border border-slate-700 p-3 rounded-xl outline-none focus:border-cyan-500/50 transition-all shadow-inner placeholder:text-slate-700"
+            className="w-full bg-slate-900 text-cyan-50 border border-slate-700 p-3 rounded-xl outline-none focus:border-cyan-500/50 transition-all shadow-inner placeholder:text-slate-400"
             onChange={(e) => setEmail(e.target.value)}
           />
         </label>
 
         {/* JELSZÓ MEZŐ */}
         <label className="flex flex-col gap-1">
-          <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-2">
+          <span className="text-[10px] font-bold text-slate-300 uppercase tracking-widest ml-2">
             Jelszó
           </span>
           <input
@@ -72,7 +72,7 @@ function SignIn() {
             type="password"
             placeholder="******"
             value={password}
-            className="w-full bg-slate-900 text-cyan-50 border border-slate-700 p-3 rounded-xl outline-none focus:border-cyan-500/50 transition-all shadow-inner placeholder:text-slate-700"
+            className="w-full bg-slate-900 text-cyan-50 border border-slate-700 p-3 rounded-xl outline-none focus:border-cyan-500/50 transition-all shadow-inner placeholder:text-slate-400"
             onChange={(e) => setPassword(e.target.value)}
           />
         </label>
@@ -92,11 +92,11 @@ function SignIn() {
 
         {/* LÁBJEGYZET */}
         <div className="mt-4 flex flex-col gap-2 items-center">
-          <p className="text-[10px] text-slate-600 uppercase tracking-widest">
+          <p className="text-center text-slate-200 uppercase tracking-widest mt-2">
             Még nincs fiókod?
             <button
               onClick={() => navigate("/sign-up")}
-              className="text-cyan-600 hover:text-cyan-400 cursor-pointer transition-colors font-bold"
+              className="text-cyan-400 hover:text-cyan-400 cursor-pointer transition-colors"
             >
               Regisztrálj itt
             </button>

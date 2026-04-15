@@ -35,7 +35,7 @@ function SignUp() {
   };
 
   return (
-    <div className="mx-auto max-w-md bg-slate-950 shadow-[0_0_50px_-12px_rgba(34,211,238,0.2)] rounded-3xl overflow-hidden border border-slate-800 mt-10">
+    <div className="mx-auto max-w-md rounded-3xl overflow-hidden border border-slate-800 mt-10">
       {/* FEJLÉC */}
       <div className="bg-slate-900/50 p-6 border-b border-slate-800 text-center relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-cyan-500 to-transparent"></div>
@@ -53,14 +53,14 @@ function SignUp() {
       >
         {/* EMAIL MEZŐ */}
         <label className="flex flex-col gap-1">
-          <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-2">
+          <span className="text-[10px] font-bold text-slate-300 uppercase tracking-widest ml-2">
             Email cím
           </span>
           <input
             required
             type="email"
             placeholder="example@mail.com"
-            className="w-full bg-slate-900 text-cyan-50 border border-slate-700 p-3 rounded-xl outline-none focus:border-cyan-500/50 transition-all shadow-inner placeholder:text-slate-700"
+            className="w-full bg-slate-900 text-cyan-50 border border-slate-700 p-3 rounded-xl outline-none focus:border-cyan-500/50 transition-all shadow-inner placeholder:text-slate-400"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -68,14 +68,14 @@ function SignUp() {
 
         {/* JELSZÓ MEZŐ */}
         <label className="flex flex-col gap-1">
-          <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-2">
+          <span className="text-[10px] font-bold text-slate-300 uppercase tracking-widest ml-2">
             Jelszó
           </span>
           <input
             required
             type="password"
             placeholder="******"
-            className="w-full bg-slate-900 text-cyan-50 border border-slate-700 p-3 rounded-xl outline-none focus:border-cyan-500/50 transition-all shadow-inner placeholder:text-slate-700"
+            className="w-full bg-slate-900 text-cyan-50 border border-slate-700 p-3 rounded-xl outline-none focus:border-cyan-500/50 transition-all shadow-inner placeholder:text-slate-400"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
@@ -83,14 +83,14 @@ function SignUp() {
 
         {/* FELHASZNÁLÓNÉV MEZŐ */}
         <label className="flex flex-col gap-1">
-          <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-2">
+          <span className="text-[10px] font-bold text-slate-300 uppercase tracking-widest ml-2">
             Hogy hívjunk? (Felhasználónév)
           </span>
           <input
             required
             type="text"
-            placeholder="Pl. Kovacs_Istvan"
-            className="w-full bg-slate-900 text-cyan-50 border border-slate-700 p-3 rounded-xl outline-none focus:border-cyan-500/50 transition-all shadow-inner placeholder:text-slate-700"
+            placeholder="Pl. Kovacs Istvan"
+            className="w-full bg-slate-900 text-cyan-50 border border-slate-700 p-3 rounded-xl outline-none focus:border-cyan-500/50 transition-all shadow-inner placeholder:text-slate-400"
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
           />
@@ -108,10 +108,10 @@ function SignUp() {
           {loading ? "FOLYAMATBAN..." : "REGISZTRÁCIÓ"}
         </button>
 
-        <p className="text-center text-[10px] text-slate-600 uppercase tracking-widest mt-2">
-          Már van fiókod?
+        <p className="text-center text-slate-200 uppercase tracking-widest mt-2">
+          Már van fiókod? {""}
           <button
-            className="text-cyan-600 hover:text-cyan-400 cursor-pointer transition-colors"
+            className="text-cyan-400 hover:text-cyan-400 cursor-pointer transition-colors"
             onClick={() => navigate("/sign-in")}
           >
             Bejelentkezés

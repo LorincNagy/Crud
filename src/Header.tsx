@@ -9,7 +9,7 @@ function Header() {
   const location = useLocation();
 
   const isHomeRoute = location.pathname === "/";
-  const isCreateProfileRoute = location.pathname === "/create-profile";
+  const isCreateProfileRoute = location.pathname === "/sign-up";
   const isSignInRoute = location.pathname === "/sign-in";
 
   useEffect(() => {
