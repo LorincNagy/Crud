@@ -22,6 +22,8 @@ export function TodoList() {
   const [task, setTask] = useState("");
   const [user, setUser] = useState<User | null>(null);
   const [profilesData, setProfilesData] = useState<ProfileWithTodos[]>([]);
+  const [editingTodo, setEditingTodo] = useState<Todo | null>(null);
+  const [editTask, setEditTask] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
   const currentProfile = location.state?.profile;
@@ -73,6 +75,23 @@ export function TodoList() {
     }
   };
 
+  function handleEdit(todo: Todo) {
+    setEditingTodo(todo);
+    setEditTask(todo.task);
+  }
+
+  const saveEdit = async () => {
+    if (!editingTodo) return;
+    const { error } = await supabase
+      .from("todos")
+      .update({ task: editTask })
+      .eq("id", editingTodo.id);
+    if (!error) {
+      setEditingTodo(null);
+      fetchAllData();
+    }
+  };
+
   if (!currentProfile) {
     return (
       <div className="text-center mt-10">
@@ -85,6 +104,20 @@ export function TodoList() {
         </button>
       </div>
     );
+  }
+
+  function handleDelete(id: string): void {
+    supabase
+      .from("todos")
+      .delete()
+      .eq("id", id)
+      .then(({ error }) => {
+        if (error) {
+          console.error("Hiba a törléskor:", error);
+        } else {
+          fetchAllData(); // Frissítjük a teljes listát
+        }
+      });
   }
 
   return (
@@ -174,8 +207,6 @@ export function TodoList() {
                         })}
                       </span>
                     </div>
-
-                    {/* CSAK HA SAJÁT: Itt jönnek a gombok */}
                     {user?.id === prof.id && (
                       <div className="flex gap-2 mt-2">
                         <button
@@ -198,6 +229,32 @@ export function TodoList() {
             </div>
           </div>
         ))}
+        {editingTodo && (
+          <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4">
+            <div className="bg-slate-900 border border-slate-700 p-6 rounded-2xl w-full max-w-sm">
+              <h3 className="text-white font-bold mb-4">Teendő szerkesztése</h3>
+              <input
+                className="w-full p-3 rounded-xl bg-gray-800 text-white border border-gray-600 mb-4"
+                value={editTask}
+                onChange={(e) => setEditTask(e.target.value)}
+              />
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setEditingTodo(null)}
+                  className="flex-1 p-2 bg-gray-700 rounded-lg text-white"
+                >
+                  Mégse
+                </button>
+                <button
+                  onClick={saveEdit}
+                  className="flex-1 p-2 bg-cyan-500 rounded-lg text-black font-bold"
+                >
+                  Mentés
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

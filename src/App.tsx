@@ -40,8 +40,7 @@ function App() {
           autoPlay
           loop
           playsInline
-          muted
-          className="absolute inset-0 w-full h-full object-contain"
+          className="absolute inset-0 w-full h-full object-cover"
         />
       );
     }
