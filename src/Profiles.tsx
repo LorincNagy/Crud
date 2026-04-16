@@ -123,11 +123,12 @@ export function Profiles() {
 
           <div className="space-y-1">
             <label className="text-[10px] font-bold text-slate-300 uppercase tracking-widest ml-2">
-              Téma színe (Hex kód)
+              Téma színe
             </label>
             <input
               required
-              placeholder="#00ffff"
+              type="color"
+              placeholder="Például: #00ffff, red..."
               className="w-full bg-slate-900 text-cyan-50 border border-slate-700 p-3 rounded-xl outline-none focus:border-cyan-500/50 transition-all shadow-inner"
               value={newColor}
               onChange={(e) => setNewColor(e.target.value)}

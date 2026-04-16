@@ -169,7 +169,7 @@ export function TodoList() {
             {/* Családtag neve (Szekció fejléc) */}
             <div className="p-3 border-b border-gray-800 flex items-center justify-between">
               <span
-                className="font-bold text-sm tracking-tighter"
+                className="font-bold text-xl tracking-tighter"
                 style={{ color: prof.color }}
               >
                 ● {prof.userName.toUpperCase()}
@@ -182,7 +182,7 @@ export function TodoList() {
             {/* Teendők listája az adott személyhez */}
             <div className="p-4 space-y-3">
               {prof.todos.length === 0 ? (
-                <p className="text-gray-600 text-xs italic">
+                <p className="text-gray-200 text-xl italic">
                   Nincs aktív teendő.
                 </p>
               ) : (
@@ -197,7 +197,7 @@ export function TodoList() {
                     ></div>
 
                     <div className="flex flex-col gap-1 flex-1">
-                      <span className="text-gray-200 text-1rem leading-tight">
+                      <span className="text-gray-200 text-1rem leading-tight break-all">
                         {todo.task}
                       </span>
                       <span className="text-1rem text-gray-200">
