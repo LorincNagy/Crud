@@ -37,7 +37,7 @@ function Home() {
           </button>
 
           <button
-            onClick={() => navigate("/create-profile")}
+            onClick={() => navigate("/sign-up")}
             className="w-full bg-transparent border border-slate-700 text-slate-300 font-bold py-4 rounded-xl hover:bg-slate-900 hover:border-slate-500 transition-all active:scale-[0.97]"
           >
             ÚJ FIÓK LÉTREHOZÁSA
