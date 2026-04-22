@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { BrowserRouter } from "react-router-dom";
 import Footer from "./Footer";
 import Header from "./Header";
-import { images } from "./assets/images";
+import { images } from "./assets/images.ts";
 import AppRouter from "./router/Approuter";
 
 function App() {
