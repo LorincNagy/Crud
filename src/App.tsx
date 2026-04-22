@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter } from "react-router-dom";
-import { images } from "./assets/images";
 import Footer from "./Footer";
 import Header from "./Header";
+import { images } from "./assets/images";
 import AppRouter from "./router/Approuter";
 
 function App() {
