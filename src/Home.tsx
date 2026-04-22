@@ -4,7 +4,7 @@ function Home() {
   const navigate = useNavigate();
 
   return (
-    <div className="mx-auto max-w-md bg-slate-900/50 rounded-3xl overflow-hidden border border-slate-800 mt-16 relative">
+    <div className="mx-auto max-w-md bg-slate-900/50 rounded-2xl overflow-hidden border border-slate-800 mt-16 relative">
       {/* Dekorációs neon vonal */}
       <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-cyan-500 to-transparent"></div>
 
