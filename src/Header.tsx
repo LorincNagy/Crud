@@ -1,4 +1,4 @@
-import type { Session } from "@supabase/supabase-js";
+import type { AuthChangeEvent, Session } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { supabase } from "./SupabaseClient";
@@ -18,12 +18,14 @@ function Header() {
     });
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((event, session) => {
-      setSession(session);
-      if (event === "SIGNED_OUT") {
-        navigate("/");
-      }
-    });
+    } = supabase.auth.onAuthStateChange(
+      (event: AuthChangeEvent, session: Session | null) => {
+        setSession(session);
+        if (event === "SIGNED_OUT") {
+          navigate("/");
+        }
+      },
+    );
     return () => subscription.unsubscribe();
   }, [navigate]);
 
