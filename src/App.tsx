@@ -6,17 +6,17 @@ import Header from "./Header";
 import AppRouter from "./router/Approuter";
 
 function App() {
-  const [bgUrl, setBgUrl] = useState(() => {
+  const [bgUrl, setBgUrl] = useState<string>(() => {
     const randomIndex = Math.floor(Math.random() * images.length);
     return images[randomIndex];
   });
 
   // Szükségünk van az előző képre is, hogy ne fekete legyen alatta
-  const [prevBg, setPrevBg] = useState(bgUrl);
+  const [prevBg, setPrevBg] = useState<string>(bgUrl);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setBgUrl((currentBg) => {
+      setBgUrl((currentBg: string) => {
         setPrevBg(currentBg); // Mielőtt váltunk, elmentjük a régit háttérnek
         let nextIndex;
         do {
