@@ -6,7 +6,6 @@ function SignUp() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [userName, setUserName] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSignUp = async () => {
@@ -15,12 +14,6 @@ function SignUp() {
     const { error } = await supabase.auth.signUp({
       email: email,
       password: password,
-      options: {
-        emailRedirectTo: `${import.meta.env.VITE_BASE_URL}/sign-in`,
-        data: {
-          userName: userName,
-        },
-      },
     });
 
     if (error) {
@@ -76,22 +69,6 @@ function SignUp() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </label>
-
-        {/* FELHASZNÁLÓNÉV MEZŐ */}
-        <label className="flex flex-col gap-1">
-          <span className="text-[10px] font-bold text-slate-300 uppercase tracking-widest ml-2">
-            Hogy hívjunk? (Felhasználónév)
-          </span>
-          <input
-            required
-            type="text"
-            placeholder="Pl. Kovacs Istvan"
-            className="w-full bg-slate-900 text-cyan-50 border border-slate-700 p-3 rounded-xl outline-none focus:border-cyan-500/50 transition-all shadow-inner placeholder:text-slate-400"
-            value={userName}
-            onChange={(e) => setUserName(e.target.value)}
-          />
-        </label>
-
         <button
           disabled={loading}
           className={`mt-4 w-full bg-cyan-500 text-slate-950 font-black py-4 px-4 rounded-xl shadow-[0_4px_20px_-5px_rgba(34,211,238,0.4)] transition-all duration-300 ease-in-out transform active:scale-95 ${
@@ -103,7 +80,6 @@ function SignUp() {
         >
           {loading ? "FOLYAMATBAN..." : "REGISZTRÁCIÓ"}
         </button>
-
         <p className="text-center text-slate-200 uppercase tracking-widest mt-2">
           Már van fiókod? {""}
           <button
