@@ -41,14 +41,14 @@ function Header() {
     }`;
 
   return (
-    <header className="bg-slate-950 border-b border-slate-800 p-4 flex justify-between items-center shadow-lg relative">
+    <header className="bg-slate-950 border-b border-slate-800 p-4 flex flex-col md:flex-row gap-4 justify-between items-center shadow-lg relative">
       <div className="absolute bottom-0 left-0 w-full h-px bg-linear-to-r from-transparent via-cyan-500/50 to-transparent"></div>
 
-      <nav>
-        <ul className="flex space-x-3 items-center">
-          <li className="mr-4">
+      <nav className="w-full md:w-auto">
+        <ul className="flex flex-wrap justify-center md:justify-start items-center gap-2">
+          <li className="mr-2 md:mr-4">
             <span
-              className="text-cyan-500 font-black tracking-tighter text-xl italic cursor-pointer"
+              className="text-cyan-500 font-black tracking-tighter text-lg md:text-xl italic cursor-pointer"
               onClick={() => navigate("/")}
             >
               TODO<span className="text-slate-500">APP</span>
@@ -62,27 +62,30 @@ function Header() {
               </NavLink>
             </li>
           )}
-          {!isCreateProfileRoute && (
+
+          {!session && !isCreateProfileRoute && (
             <li>
               <NavLink to="/sign-up" className={navLinkStyling}>
-                Regisztráció
+                <span className="hidden sm:inline">Regisztráció</span>
+                <span className="sm:hidden">Reg.</span>
               </NavLink>
             </li>
           )}
+
           {!session && !isSignInRoute && (
             <li>
               <NavLink to="/sign-in" className={navLinkStyling}>
-                Bejelentkezés
+                Belépés
               </NavLink>
             </li>
           )}
         </ul>
       </nav>
 
-      <div className="flex gap-3 items-center">
+      <div className="flex flex-wrap justify-center items-center gap-2">
         {session?.user?.user_metadata?.userName && (
-          <span className="hidden md:block text-[10px] text-slate-500 uppercase tracking-widest font-bold mr-2">
-            Üdv,{" "}
+          <span className="text-[10px] text-slate-500 uppercase tracking-widest font-bold mr-2">
+            <span className="hidden sm:inline">Üdv, </span>
             <span className="text-cyan-400">
               {session.user.user_metadata.userName}
             </span>
@@ -92,7 +95,7 @@ function Header() {
         {session && (
           <button
             onClick={handleSignOut}
-            className="bg-transparent border border-rose-500/50 text-rose-500 hover:bg-rose-500 hover:text-white text-[10px] font-black uppercase tracking-widest py-1.5 px-4 rounded-xl transition-all active:scale-95"
+            className="bg-transparent border border-rose-500/50 text-rose-500 hover:bg-rose-500 hover:text-white text-[10px] font-black uppercase tracking-widest py-1.5 px-3 rounded-xl transition-all active:scale-95"
           >
             Kijelentkezés
           </button>
@@ -101,9 +104,10 @@ function Header() {
         {!isHomeRoute && (
           <button
             onClick={() => navigate("/")}
-            className="bg-slate-800 text-slate-300 hover:text-cyan-400 text-[10px] font-black uppercase tracking-widest py-1.5 px-4 rounded-xl border border-slate-700 transition-all active:scale-95"
+            className="bg-slate-800 text-slate-300 hover:text-cyan-400 text-[10px] font-black uppercase tracking-widest py-1.5 px-3 rounded-xl border border-slate-700 transition-all active:scale-95"
           >
-            Vissza a főoldalra
+            <span className="hidden sm:inline">Vissza a főoldalra</span>
+            <span className="sm:hidden">Vissza</span>
           </button>
         )}
       </div>
