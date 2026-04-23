@@ -28,14 +28,13 @@ export function TodoList() {
   const navigate = useNavigate();
   const currentProfile = location.state?.profile;
 
-  // Adatok betöltése: Profilok + a hozzájuk tartozó feladatok
   const fetchAllData = async () => {
     const { data, error } = await supabase.from("profiles").select(`
         id,
         userName,
         color,
         todos (*)
-      `); // Ez lekéri a profilokat és beágyazza a todos tábla sorait
+      `);
 
     if (error) {
       console.error("Hiba az adatok lekérésekor:", error);
@@ -122,7 +121,6 @@ export function TodoList() {
 
   return (
     <div className="mx-auto max-w-4xl px-4 mt-10 pb-20">
-      {/* Aktív profil és Form */}
       <div className="bg-slate-900/50 shadow-2xl rounded-2xl border border-gray-600 mb-10 overflow-hidden">
         <div className="p-4 border-b border-gray-600 text-center bg-slate-900/50">
           <p className="text-gray-400 text-sm">Aktív profil:</p>
@@ -159,14 +157,12 @@ export function TodoList() {
         </form>
       </div>
 
-      {/* CSOPORTOSÍTOTT LISTA */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {profilesData.map((prof) => (
           <div
             key={prof.id}
             className="bg-slate-900/50 rounded-2xl border border-gray-800 shadow-lg overflow-hidden"
           >
-            {/* Családtag neve (Szekció fejléc) */}
             <div className="p-3 border-b border-gray-800 flex items-center justify-between">
               <span
                 className="font-bold text-xl tracking-tighter"
@@ -179,7 +175,6 @@ export function TodoList() {
               </span>
             </div>
 
-            {/* Teendők listája az adott személyhez */}
             <div className="p-4 space-y-3">
               {prof.todos.length === 0 ? (
                 <p className="text-gray-200 text-xl italic">

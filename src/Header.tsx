@@ -33,7 +33,6 @@ function Header() {
     await supabase.auth.signOut();
   };
 
-  // Közös stílus a NavLinkekhez
   const navLinkStyling = ({ isActive }: { isActive: boolean }) =>
     `px-4 py-1.5 rounded-xl text-xs uppercase tracking-widest font-bold transition-all shadow-sm ${
       isActive
@@ -43,12 +42,10 @@ function Header() {
 
   return (
     <header className="bg-slate-950 border-b border-slate-800 p-4 flex justify-between items-center shadow-lg relative">
-      {/* Egy vékony neon csík a fejléc alján */}
       <div className="absolute bottom-0 left-0 w-full h-px bg-linear-to-r from-transparent via-cyan-500/50 to-transparent"></div>
 
       <nav>
         <ul className="flex space-x-3 items-center">
-          {/* LOGO vagy App név kicsiben */}
           <li className="mr-4">
             <span
               className="text-cyan-500 font-black tracking-tighter text-xl italic cursor-pointer"
@@ -58,7 +55,6 @@ function Header() {
             </span>
           </li>
 
-          {/* PROFILES */}
           {session && (
             <li>
               <NavLink to="/profiles" className={navLinkStyling}>
@@ -66,8 +62,6 @@ function Header() {
               </NavLink>
             </li>
           )}
-
-          {/* CREATE PROFILE */}
           {!isCreateProfileRoute && (
             <li>
               <NavLink to="/sign-up" className={navLinkStyling}>
@@ -75,8 +69,6 @@ function Header() {
               </NavLink>
             </li>
           )}
-
-          {/* SIGN IN */}
           {!session && !isSignInRoute && (
             <li>
               <NavLink to="/sign-in" className={navLinkStyling}>
@@ -88,7 +80,6 @@ function Header() {
       </nav>
 
       <div className="flex gap-3 items-center">
-        {/* Felhasználónév kijelzése a fejlécben, ha be van lépve */}
         {session?.user?.user_metadata?.userName && (
           <span className="hidden md:block text-[10px] text-slate-500 uppercase tracking-widest font-bold mr-2">
             Üdv,{" "}

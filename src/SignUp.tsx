@@ -36,7 +36,6 @@ function SignUp() {
 
   return (
     <div className="mx-auto max-w-md rounded-3xl overflow-hidden border border-slate-800 mt-10">
-      {/* FEJLÉC */}
       <div className="bg-slate-900/50 p-6 border-b border-slate-800 text-center relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-cyan-500 to-transparent"></div>
         <h2 className="text-slate-100 text-xl font-bold tracking-wider uppercase">
@@ -51,7 +50,6 @@ function SignUp() {
           handleSignUp();
         }}
       >
-        {/* EMAIL MEZŐ */}
         <label className="flex flex-col gap-1">
           <span className="text-[10px] font-bold text-slate-300 uppercase tracking-widest ml-2">
             Email cím
@@ -65,8 +63,6 @@ function SignUp() {
             onChange={(e) => setEmail(e.target.value)}
           />
         </label>
-
-        {/* JELSZÓ MEZŐ */}
         <label className="flex flex-col gap-1">
           <span className="text-[10px] font-bold text-slate-300 uppercase tracking-widest ml-2">
             Jelszó
